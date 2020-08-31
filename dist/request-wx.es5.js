@@ -1,14 +1,31 @@
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
         }
         return t;
     };
     return __assign.apply(this, arguments);
 };
+
+var NET_ERR_NO = -11;
+var SERVICE_ERR_NO = -10;
 /**
  * @param {*} type 请求的类型
  * @param {*} configs 请求的通用配置项
@@ -32,7 +49,7 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
                     resolve(res.data); // 直接将服务器返回的数据抛出
                 }
                 else {
-                    errMessage.errno = getErrorno(res) || -10;
+                    errMessage.errno = getErrorno(res) || SERVICE_ERR_NO;
                     errMessage.errmsg = getErrorMsg(res) || '网络错误';
                     reject(errMessage);
                 }
@@ -44,7 +61,7 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
                 }
             },
             fail: function (err) {
-                reject({ errno: -11, errmsg: err.errMsg });
+                reject({ errno: NET_ERR_NO, errmsg: err.errMsg });
                 isShowErrorMessage && wx.showToast({
                     title: '请求异常',
                     icon: 'none',
@@ -56,5 +73,7 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
         });
     });
 }; };
-module.exports = httpRequest;
+
+export default httpRequest;
+export { NET_ERR_NO, SERVICE_ERR_NO };
 //# sourceMappingURL=request-wx.es5.js.map

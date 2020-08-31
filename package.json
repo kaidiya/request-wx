@@ -1,6 +1,6 @@
 {
   "name": "request-wx",
-  "version": "0.0.9",
+  "version": "0.0.92",
   "description": "",
   "keywords": [],
   "main": "dist/request-wx.umd.js",

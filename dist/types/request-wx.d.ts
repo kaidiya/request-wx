@@ -15,6 +15,8 @@ interface RequestOptions {
     isShowLoading?: boolean;
 }
 declare type RequestMethod = 'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'CONNECT';
+export declare const NET_ERR_NO = -11;
+export declare const SERVICE_ERR_NO = -10;
 /**
  * @param {*} type 请求的类型
  * @param {*} configs 请求的通用配置项
@@ -22,3 +24,4 @@ declare type RequestMethod = 'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELE
  * @param {*} params 请求的参数
  */
 declare const httpRequest: (wx: Record<string, any>, type: RequestMethod, configs?: RequestConfigs | undefined) => (url: string, params?: Record<string, any> | undefined, requestOptions?: RequestOptions | undefined) => Promise<unknown>;
+export default httpRequest;

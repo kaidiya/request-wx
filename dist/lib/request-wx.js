@@ -10,6 +10,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SERVICE_ERR_NO = exports.NET_ERR_NO = void 0;
+exports.NET_ERR_NO = -11;
+exports.SERVICE_ERR_NO = -10;
 /**
  * @param {*} type 请求的类型
  * @param {*} configs 请求的通用配置项
@@ -33,7 +37,7 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
                     resolve(res.data); // 直接将服务器返回的数据抛出
                 }
                 else {
-                    errMessage.errno = getErrorno(res) || -10;
+                    errMessage.errno = getErrorno(res) || exports.SERVICE_ERR_NO;
                     errMessage.errmsg = getErrorMsg(res) || '网络错误';
                     reject(errMessage);
                 }
@@ -45,7 +49,7 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
                 }
             },
             fail: function (err) {
-                reject({ errno: -11, errmsg: err.errMsg });
+                reject({ errno: exports.NET_ERR_NO, errmsg: err.errMsg });
                 isShowErrorMessage && wx.showToast({
                     title: '请求异常',
                     icon: 'none',
@@ -57,5 +61,5 @@ var httpRequest = function (wx, type, configs) { return function (url, params, r
         });
     });
 }; };
-module.exports = httpRequest;
+exports.default = httpRequest;
 //# sourceMappingURL=request-wx.js.map

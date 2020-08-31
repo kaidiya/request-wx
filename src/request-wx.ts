@@ -19,6 +19,9 @@ interface RequestOptions {
 
 type RequestMethod = 'OPTIONS'|'GET'|'HEAD'|'POST'|'PUT'|'DELETE'|'TRACE'|'CONNECT';
 
+export const NET_ERR_NO = -11;
+export const SERVICE_ERR_NO = -10;
+
 /**
  * @param {*} type 请求的类型
  * @param {*} configs 请求的通用配置项
@@ -52,7 +55,7 @@ const httpRequest = (wx: Record<string, any>, type:RequestMethod, configs?:Reque
           // http code 200
           resolve(res.data);  // 直接将服务器返回的数据抛出
         } else {
-          errMessage.errno = getErrorno(res) || -10;
+          errMessage.errno = getErrorno(res) || SERVICE_ERR_NO;
           errMessage.errmsg = getErrorMsg(res) || '网络错误';
           reject(errMessage);
         } 
@@ -64,7 +67,7 @@ const httpRequest = (wx: Record<string, any>, type:RequestMethod, configs?:Reque
         }
       },
       fail(err:{errMsg:string}) {
-        reject({errno: -11, errmsg: err.errMsg});
+        reject({errno: NET_ERR_NO, errmsg: err.errMsg});
         isShowErrorMessage && wx.showToast({
           title: '请求异常',
           icon: 'none',
@@ -77,4 +80,4 @@ const httpRequest = (wx: Record<string, any>, type:RequestMethod, configs?:Reque
   })
 };
 
-module.exports = httpRequest;
+export default httpRequest;
